@@ -28,4 +28,8 @@ public abstract class Task<T> {
     public String getHeader(String header) {
         return headers.get(header);
     }
+
+    protected Map<String, String> getHeaders() {
+        return this.headers;
+    }
 }

@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+
 public class Group<T> extends Task<T> {
     public String groupUuid;
     private List<Task<T>> tasks;
+    private Visitor visitor = new Visitor();
 
     public Group<T> addTask(Task<T> task) {
         if (tasks == null) {
@@ -29,9 +31,11 @@ public class Group<T> extends Task<T> {
     @Override
     public void apply(T arg) {
         this.freeze();
+        this.visitor.onStart(this, this.getHeaders());
         tasks = Collections.unmodifiableList(tasks);
         for (Task<T> task: tasks) {
             task.apply(arg);
         }
+        this.visitor.inTheEnd(this, this.getHeaders());
     }
 }
